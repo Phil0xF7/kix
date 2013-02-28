@@ -69,9 +69,6 @@ Notes.prototype.fetchAll = function(){
             var str = "All Row Data: =======================><br>";
             var n; 
            $(data).each(function(index){
-                // var subject = data[index]["subject"];
-                // var content = data[index]["content"];
-                // str += "id:" + data[index]["id"] + ", subject: " + subject + ", content:"+ content + "<br>";
               n = new Note(data[index]["id"], data[index]["subject"], data[index]["content"]);
               str += n.formatStr() + "<br>";
             });
@@ -90,7 +87,7 @@ Note.prototype.fetch = function(){
             _this.subject = data['subject'];
             _this.content = data['content'];
             $("#content").html("<div class='alert alert-info'><strong>GET</strong> id:" + data["id"] + ", " +_this.subject+", "+_this.content+"</div>");
-            // notes.fetchAll();
+            notes.fetchAll();
             $("#txt-subject").val(_this.subject);
             $("#txt-content").val(_this.content);
         }
@@ -186,6 +183,19 @@ function refresh(){
 
 $().ready(refresh());
 
+// when hovering over a button, disable the other buttons
+$("#btn-create").hover(
+  function () {$(":not(#btn-create)").addClass('disabled');},
+  function () {$(":not(#btn-create)").removeClass('disabled');}
+);
 
+$("#btn-update").hover(
+  function () {$(":not(#btn-update)").addClass('disabled');},
+  function () {$(":not(#btn-update)").removeClass('disabled');}
+);
 
+$("#btn-delete").hover(
+  function () {$(":not(#btn-delete)").addClass('disabled');},
+  function () {$(":not(#btn-delete)").removeClass('disabled');}
+);
 
