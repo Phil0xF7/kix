@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>This is the title</title>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container hero-unit">
+            <h1>LET ME HEAR YOU MAKE SOME NOOOOOOTESS!</h1>
+            <label for="noteid">Note Id</label>
+            <select id="txt-noteid" name="noteid"></select><br>
+            <label for="subject">Subject</label>
+            <input id="txt-subject" type="textfield" value="Subject"><br>
+            <label for="content">Content</label>
+            <textarea id="txt-content">Content</textarea><br>
+
+            <button id="btn-create">Create</button>
+            <button id="btn-update">Update</button>
+            <button id="btn-delete">Delete</button>
+            <br><br>
+            <div id="content"></div>
+        </div>
+        <script src="js/jquery-1.9.1.min.js"></script>
+        <script src="js/jquery.json-2.4.min.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
