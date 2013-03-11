@@ -22,35 +22,41 @@ end
 # . multi-user with authentication
 
 configure :development, :production do
-  set :datamapper_url, "sqlite3://#{File.dirname(__FILE__)}/corkboard.sqlite3"
+  set :datamapper_url, "sqlite3://#{File.dirname(__FILE__)}/kix.sqlite3"
 end
 configure :test do
-  set :datamapper_url, "sqlite3://#{File.dirname(__FILE__)}/corkboard-test.sqlite3"
+  set :datamapper_url, "sqlite3://#{File.dirname(__FILE__)}/kix-test.sqlite3"
 end
 
 DataMapper.setup(:default, settings.datamapper_url)
 
-class Note
+class Task
   include DataMapper::Resource
 
-  Note.property(:id, Serial)
-  Note.property(:subject, Text, :required => true)
-  Note.property(:content, Text, :required => true)
-  Note.property(:created_at, DateTime)
-  Note.property(:updated_at, DateTime)
+  Task.property(:id, Serial)
+  Task.property(:user_id, Integer, :required => true)
+  Task.property(:type, Text, :required => true)
+  Task.property(:text, Text)
+  Task.property(:completed, Boolean, :default => false)
+  Task.property(:created_at, DateTime)
+  Task.property(:updated_at, DateTime)
 
   def to_json(*a)
    {
-      'id'      => self.id,
-      'subject' => self.subject,
-      'content' => self.content,
-      'date'    => self.updated_at
+      'id'            => self.id,
+      'user_id'       => self.user_id,
+      'type'          => self.type,
+      'text'          => self.text,
+      'completed'     => self.completed,
+      'created_at'    => self.created_at,
+      'updated_at'    => self.updated_at
+
    }.to_json(*a)
   end
 end
 
 DataMapper.finalize
-Note.auto_upgrade!
+Task.auto_upgrade!
 
 def jsonp?(json)
   if params[:callback]
@@ -64,35 +70,35 @@ get '/' do
     redirect 'index.html'
 end
 
-get '/notes' do
-  notes = Note.all.to_a
+get '/tasks' do
+  tasks = Task.all.to_a
 
-  if notes.nil?
+  if tasks.nil?
     return [404, {'Content-Type' => 'application/json'}, ['']]
   end
 
-  return [200, {'Content-Type' => 'application/json'}, [jsonp?(notes.to_json)]]
+  return [200, {'Content-Type' => 'application/json'}, [jsonp?(tasks.to_json)]]
 
 end
 
-# Download one note, subject and content
+# Download one task, subject and content
 # Returns:
 # {
 #    subject : "the subject",
 #    content : "wibble wibble wibble wibble""
 # }
 #
-get '/note/:id' do
-  note = Note.get(params[:id])
+get '/task/:id' do
+  task = Task.get(params[:id])
 
-  if note.nil?
+  if task.nil?
     return [404, {'Content-Type' => 'application/json'}, ['']]
   end
 
-  return [200, {'Content-Type' => 'application/json'}, [jsonp?(note.to_json)]]
+  return [200, {'Content-Type' => 'application/json'}, [jsonp?(task.to_json)]]
 end
 
-# Add a note to the server, subject and content
+# Add a task to the server, subject and content
 # will give you back an id
 # Body
 # {
@@ -102,7 +108,7 @@ end
 #
 # Returns
 #  2
-put '/note' do
+put '/task' do
   # Request.body.read is destructive, make sure you don't use a puts here.
   data = JSON.parse(request.body.read)
 
@@ -112,21 +118,23 @@ put '/note' do
     return [406, {'Content-Type' => 'application/json'}, ['']]
   end
 
-  note = Note.create(
-              :subject => data['subject'],
-              :content => data['content'],
+  task = Task.create(
+              :user_id => data['user_id'],
+              :type => data['type'],
+              :text => data['text'],
+              :completed => data['completed'],
               :created_at => Time.now,
               :updated_at => Time.now)
 
   # PUT requests must return a Location header for the new resource
-  if note.save
-    return [201, {'Content-Type' => 'application/json', 'Location' => "/note/#{note.id}"}, [jsonp?(note.to_json)]]
+  if task.save
+    return [201, {'Content-Type' => 'application/json', 'Location' => "/task/#{task.id}"}, [jsonp?(task.to_json)]]
   else
     return [406, {'Content-Type' => 'application/json'}, ['']]
   end
 end
 
-# Update the content of a note, replace subject
+# Update the content of a task, replace subject
 # or content
 # Body
 # {
@@ -134,41 +142,41 @@ end
 #    content : "wibble wibble wibble wibble""
 # }
 # Subject and content are optional!
-post '/note/:id' do
+post '/task/:id' do
   # Request.body.read is destructive, make sure you don't use a puts here.
   data = JSON.parse(request.body.read)
   if data.nil?
     return [406, {'Content-Type' => 'application/json'}, ['']]
   end
 
-  note = Note.get(params[:id])
-  if note.nil?
+  task = Task.get(params[:id])
+  if task.nil?
     return [404, {'Content-Type' => 'application/json'}, ['']]
   end
 
   %w(subject content).each do |key|
-    if !data[key].nil? && data[key] != note[key]
-      note[key] = data[key]
-      note['updated_at'] = Time.now
+    if !data[key].nil? && data[key] != task[key]
+      task[key] = data[key]
+      task['updated_at'] = Time.now
     end
   end
 
-  if note.save then
-    return [200, {'Content-Type' => 'application/json'}, [jsonp?(note.to_json)]]
+  if task.save then
+    return [200, {'Content-Type' => 'application/json'}, [jsonp?(task.to_json)]]
   else
     return [406, {'Content-Type' => 'application/json'}, ['']]
   end
 end
 
-# Remove a note entirely
+# Remove a task entirely
 # delete method hack might be required here!
-delete '/note/:id' do
-  note = Note.get(params[:id])
-  if note.nil?
+delete '/task/:id' do
+  task = Task.get(params[:id])
+  if task.nil?
     return [404, {'Content-Type' => 'application/json'}, ['']]
   end
 
-  if note.destroy then
+  if task.destroy then
     return [204, {'Content-Type' => 'application/json'}, ['']]
   else
     return [500, {'Content-Type' => 'application/json'}, ['']]
