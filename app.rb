@@ -108,13 +108,19 @@ end
 #
 # Returns
 #  2
+
+
+## For testing:
+## curl -vX PUT -d '{"user_id": "1", "type": "story_main", "text": "this is my story", "completed": "true" }' http://localhost:9292/task
+
+
 put '/task' do
   # Request.body.read is destructive, make sure you don't use a puts here.
   data = JSON.parse(request.body.read)
 
   # Normally we would let the model validations handle this but we don't
   # have validations yet so we have to check now and after we save.
-  if data.nil? || data['subject'].nil? || data['content'].nil?
+  if data.nil? || data['user_id'].nil? || data['type'].nil?
     return [406, {'Content-Type' => 'application/json'}, ['']]
   end
 
@@ -182,3 +188,5 @@ delete '/task/:id' do
     return [500, {'Content-Type' => 'application/json'}, ['']]
   end
 end
+
+
