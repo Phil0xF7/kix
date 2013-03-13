@@ -96,8 +96,8 @@ end
 
 
 #get all task by specific user_id
-get '/user/:name' do
-  task = Task.where(:name => params[:name]).to_a
+get '/user/:user_id' do
+  task = Task.where(:user_id  =>  1)
 
   if task.nil?
     return [404, {'Content-Type' => 'application/json'}, ['']]
