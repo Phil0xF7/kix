@@ -1,0 +1,70 @@
+@charset "UTF-8";
+
+/* Import Bootstrap and Flat UI Stylesheets */
+
+@import url("bootstrap.css");
+@import url("flat-ui.css");
+
+/* Kix Styling */
+
+body {
+		background-color: #1abc9c;
+	}
+#container {
+	background-color: #ecf0f1;
+	width: 300px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	margin: 8em auto;
+	padding: 20px 20px 10px 20px;
+	position: relative;
+}
+h1#welcome {
+	float: left;
+	width: 180px;
+	font-size: 2.8em;
+}
+h1#congrats {
+	text-align: center;
+	font-size: 2.8em;
+}
+h2#almost {
+	text-align: center;
+	margin-bottom: 150px;
+	line-height: 0.8em;
+}
+input.span3 {
+	width: 95%;
+	font-size: 1.4em;
+	color: #cccccc;
+}
+input.span3#date {
+	width: 200px;
+	height: 1.1em;
+	font-size: 2.5em;
+	text-align: center;
+	margin: 5px 20px 20px 0;
+}
+#clipboard {
+	float:left; 
+	margin: 0 20px 20px 0;
+}
+.orange {
+	color: #e67e22;
+}
+#greenbox {
+	background-color: #16a085;
+	color: #fff;
+	font-size: 1.3em;
+	width: 300px;
+	position: absolute;
+	left: 0;
+	top: 120px;
+	padding: 20px;
+	text-align: center;
+}
+img#cal {
+	width: 60px;
+	margin: 0 0 15px 0;
+}

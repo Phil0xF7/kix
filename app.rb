@@ -5,6 +5,10 @@ require 'dm-core'
 require 'dm-validations'
 require 'dm-timestamps'
 require 'dm-migrations'
+require 'sinatra-authentication'
+require 'digest/sha1'
+require 'haml'
+
 
 if development? # This is set by default, override with `RACK_ENV=production rackup`
   require 'sinatra/reloader'
@@ -30,6 +34,7 @@ end
 
 DataMapper.setup(:default, settings.datamapper_url)
 
+use Rack::Session::Cookie, :secret => 'A1 sauce 1s so good you should use 1t on a11 yr st34ksssss'
 
 class Task
   include DataMapper::Resource
@@ -57,7 +62,7 @@ class Task
 end
 
 DataMapper.finalize
-Task.auto_upgrade!
+DataMapper.auto_upgrade!
 
 def jsonp?(json)
   if params[:callback]
@@ -65,6 +70,10 @@ def jsonp?(json)
   else
     return(json)
   end
+end
+
+before '/task*' do
+  login_required
 end
 
 get '/' do
