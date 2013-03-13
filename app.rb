@@ -30,6 +30,7 @@ end
 
 DataMapper.setup(:default, settings.datamapper_url)
 
+
 class Task
   include DataMapper::Resource
 
@@ -70,7 +71,7 @@ get '/' do
     redirect 'index.html'
 end
 
-# get all tasks
+# get all tasks in existence
 get '/tasks' do
   tasks = Task.all.to_a
 
@@ -94,13 +95,22 @@ get '/task/:id' do
 end
 
 
-# for making a new user id, type, etc.
+#get all task by specific user_id
+get '/user/:name' do
+  task = Task.where(:name => params[:name]).to_a
+
+  if task.nil?
+    return [404, {'Content-Type' => 'application/json'}, ['']]
+  end
+
+  return [200, {'Content-Type' => 'application/json'}, [jsonp?(task.to_json)]]
+end
+
 
 ## For testing:
 ## curl -vX PUT -d '{"user_id": "1", "type": "story_main", "text": "this is my story", "completed": "true" }' http://localhost:9292/task
 
-# make new tasks
-
+# make new tasks.
 put '/task' do
   # Request.body.read is destructive, make sure you don't use a puts here.
   data = JSON.parse(request.body.read)
@@ -155,8 +165,7 @@ post '/task/:id' do
   end
 end
 
-# Remove a task entirely
-# delete method hack might be required here!
+# Remove a task + user entirely. For admin use.
 delete '/task/:id' do
   task = Task.get(params[:id])
   if task.nil?
