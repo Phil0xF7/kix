@@ -72,6 +72,7 @@ def jsonp?(json)
   end
 end
 
+# comment out for dev mode
 before '/task*' do
   login_required
 end
@@ -92,7 +93,7 @@ get '/tasks' do
 
 end
 
-# get task by id
+# get all task in existence by id.
 get '/task/:id' do
   task = Task.get(params[:id])
 
@@ -103,10 +104,19 @@ get '/task/:id' do
   return [200, {'Content-Type' => 'application/json'}, [jsonp?(task.to_json)]]
 end
 
+get '/user' do
+  task = Task.all(:user_id  => current_user.id).to_a
+
+  if task.nil?
+    return [404, {'Content-Type' => 'application/json'}, ['']]
+  end
+
+  return [200, {'Content-Type' => 'application/json'}, [jsonp?(task.to_json)]]
+end
 
 #get all task by specific user_id
-get '/user/:user_id' do
-  task = Task.where(:user_id  =>  1)
+get '/user/:cur_usr' do
+  task = Task.all(:user_id  =>  params[:cur_usr]).to_a
 
   if task.nil?
     return [404, {'Content-Type' => 'application/json'}, ['']]
@@ -117,7 +127,11 @@ end
 
 
 ## For testing:
-## curl -vX PUT -d '{"user_id": "1", "type": "story_main", "text": "this is my story", "completed": "true" }' http://localhost:9292/task
+## curl -vX PUT -d '{"current_user.id": "2", "type": "fin_goal", "text": "10000.000", "completed": "true" }' http://localhost:9292/task
+
+#
+
+
 
 # make new tasks.
 put '/task' do
@@ -125,13 +139,13 @@ put '/task' do
   data = JSON.parse(request.body.read)
 
   # Normally we would let the model validations handle this but we don't
-  # have validations yet so we have to check now and after we save.
+  # have validati3ons yet so we have to check now and after we save.
   if data.nil? || data['user_id'].nil? || data['type'].nil?
     return [406, {'Content-Type' => 'application/json'}, ['']]
   end
 
   task = Task.create(
-              :user_id => data['user_id'],
+              :user_id => data['current_user.id'],
               :type => data['type'],
               :text => data['text'],
               :completed => data['completed'],
@@ -145,6 +159,41 @@ put '/task' do
     return [406, {'Content-Type' => 'application/json'}, ['']]
   end
 end
+
+post '/test' do
+  # puts params[:post][:type_task]
+  # puts "hello"
+  # puts params[:input]
+  # puts params[:type_task]
+  # puts params[:completed]
+  # Request.body.read is destructive, make sure you don't use a puts here.
+  # data = JSON.parse(request.body.read)
+
+  # Normally we would let the model validations handle this but we don't
+  # have validati3ons yet so we have to check now and after we save.
+
+  # if data.nil? || data['user_id'].nil? || data['type'].nil?
+  #   return [406, {'Content-Type' => 'application/json'}, ['']]
+  # end
+
+  task = Task.create(
+              :user_id => current_user.id,
+              :type => params[:type_task],
+              :text => params[:type_text],
+              :completed => params[:completed],
+              :created_at => Time.now,
+              :updated_at => Time.now)
+
+  # PUT requests must return a Location header for the new resource
+  if task.save
+    return [201, {'Content-Type' => 'application/json'}, ['Good, work.']]
+  else
+    return [406, {'Content-Type' => 'application/json'}, ['']]
+  end
+
+
+end
+
 
 #update task text field and completeness
 post '/task/:id' do

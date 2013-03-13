@@ -7,23 +7,22 @@
     </head>
     <body>
         <div class="container hero-unit">
-            <h1>NOOOOOOTESS!</h1>
-            <label for="noteid">Note Id</label>
-            <select id="txt-noteid" name="noteid"></select><br>
-            <label for="subject">Subject</label>
-            <input id="txt-subject" type="textfield" value="Subject"><br>
-            <label for="content">Content</label>
-            <textarea id="txt-content">Content</textarea><br>
+            <h1>Pre-kix</h1>
+            <form name="input" action="/test" method="POST">
+                <label for="noteid">Type of Task</label>
+                <input type="textfield" name="post[type_task]" value="Task"><br>
+                <label for="content">Text</label>
+                <textarea id="txt-content" name="post[test_text]">Text</textarea><br>
+                <input type="checkbox" name="post[completed]" value="true">Completed?<br>
 
-            <button id="btn-create">Create</button>
-            <button id="btn-update">Update</button>
-            <button id="btn-delete">Delete</button>
+
+                <button id="btn-submit" type="submit">Submit</button></input>
+                <button id="btn-update">Update</button>
+                <button id="btn-delete">Delete</button>
+            </form>
             <br><br>
             <hr>
             <div id="content"></div>
         </div>
-        <script src="js/jquery-1.9.1.min.js"></script>
-        <script src="js/jquery.json-2.4.min.js"></script>
-        <script src="app.js"></script>
     </body>
 </html>
