@@ -70,6 +70,7 @@ get '/' do
     redirect 'index.html'
 end
 
+# get all tasks
 get '/tasks' do
   tasks = Task.all.to_a
 
@@ -81,13 +82,7 @@ get '/tasks' do
 
 end
 
-# Download one task, subject and content
-# Returns:
-# {
-#    subject : "the subject",
-#    content : "wibble wibble wibble wibble""
-# }
-#
+# get task by id
 get '/task/:id' do
   task = Task.get(params[:id])
 
@@ -98,21 +93,13 @@ get '/task/:id' do
   return [200, {'Content-Type' => 'application/json'}, [jsonp?(task.to_json)]]
 end
 
-# Add a task to the server, subject and content
-# will give you back an id
-# Body
-# {
-#    subject : "the subject",
-#    content : "wibble wibble wibble wibble""
-# }
-#
-# Returns
-#  2
 
+# for making a new user id, type, etc.
 
 ## For testing:
 ## curl -vX PUT -d '{"user_id": "1", "type": "story_main", "text": "this is my story", "completed": "true" }' http://localhost:9292/task
 
+# make new tasks
 
 put '/task' do
   # Request.body.read is destructive, make sure you don't use a puts here.
@@ -140,14 +127,7 @@ put '/task' do
   end
 end
 
-# Update the content of a task, replace subject
-# or content
-# Body
-# {
-#    subject : "the subject",
-#    content : "wibble wibble wibble wibble""
-# }
-# Subject and content are optional!
+#update task text field and completeness
 post '/task/:id' do
   # Request.body.read is destructive, make sure you don't use a puts here.
   data = JSON.parse(request.body.read)
@@ -160,12 +140,13 @@ post '/task/:id' do
     return [404, {'Content-Type' => 'application/json'}, ['']]
   end
 
-  %w(subject content).each do |key|
+  %w(text completed).each do |key|
     if !data[key].nil? && data[key] != task[key]
       task[key] = data[key]
       task['updated_at'] = Time.now
     end
   end
+
 
   if task.save then
     return [200, {'Content-Type' => 'application/json'}, [jsonp?(task.to_json)]]
