@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+/* Import Bootstrap and Flat UI Stylesheets */
+
+@import url("bootstrap.css");
+@import url("flat-ui.css");
+
+/* Kix Styling */
+
+body {
+	background-color: #1abc9c;
+	}
+
+#container {
+	margin: 50px auto;
+	width: 300px;
+	}
+
+#container-top {
+	background-color: #ecf0f1;
+	width: 100%;
+	-webkit-border-radius: 6px 6px 0 0;
+	-moz-border-radius: 6px 6px 0 0;
+	border-radius: 6px 6px 0 0;
+	padding: 20px 20px 5px 20px;
+	clear: both;
+}
+#container-mid {
+	background-color: #16a085;
+	width: 100%;
+	padding: 20px 20px 10px 20px;
+	clear: both;
+	text-align: center;
+	color: #fff;
+	font-size: 1.3em;
+}
+#container-bot {
+	background-color: #ecf0f1;
+	width: 100%;
+	-webkit-border-radius: 0 0 6px 6px;
+	-moz-border-radius: 0 0 6px 6px;
+	border-radius: 0 0 6px 6px;
+	padding: 20px 20px 10px 20px;
+}
+h1#welcome {
+	float: left;
+	width: 160px;
+	font-size: 2.6em;
+	margin: 15px 20px 0 0;
+	display: inline;
+}
+h1#congrats {
+	text-align: center;
+	font-size: 2.8em;
+}
+h2#almost {
+	text-align: center;
+	margin-bottom: 150px;
+	line-height: 0.8em;
+}
+input.span3 {
+	width: 95%;
+	font-size: 1.4em;
+	color: #cccccc;
+}
+input.span3#date {
+	width: 200px;
+	height: 1.1em;
+	font-size: 2.5em;
+	text-align: center;
+	margin: 5px 20px 20px 0;
+}
+#clipboard {
+	float:left; 
+	margin: 0 20px 20px 0;
+	display: inline;
+}
+.orange {
+	color: #e67e22;
+}
+img#cal {
+	width: 60px;
+	margin: 0 0 15px 0;
+}
+p.belowbtn {
+	text-align: center;
+}
+.cf { zoom: 1; }
+
+.cf:before,
+
+.cf:after { content: ""; display: table; }
+
+.cf:after { clear: both; }
+
+#login {
+  width: 140px;
+  float: left;
+  display: inline;
+  margin: -3px 20px 10px 0;
+}
+
+#signup {
+  width: 140px;
+  float: left;
+  display: inline;
+  margin: -3px 0 10px 0;
+}

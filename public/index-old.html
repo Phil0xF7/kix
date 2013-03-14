@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>This is the title</title>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container hero-unit">
+            <h1>Pre-kix</h1>
+            <form name="input" action="/test" method="POST">
+                <label for="noteid">Type of Task</label>
+                <input type="textfield" name="post[type_task]" value="Task"><br>
+                <label for="content">Text</label>
+                <textarea id="txt-content" name="post[test_text]">Text</textarea><br>
+                <input type="checkbox" name="post[completed]" value="true">Completed?<br>
+
+
+                <button id="btn-submit" type="submit">Submit</button></input>
+                <button id="btn-update">Update</button>
+                <button id="btn-delete">Delete</button>
+            </form>
+            <br><br>
+            <hr>
+            <div id="content"></div>
+        </div>
+    </body>
+</html>
