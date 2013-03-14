@@ -55,7 +55,7 @@ h1#congrats {
 }
 h2#almost {
 	text-align: center;
-	margin-bottom: 150px;
+	margin-bottom: 20px;
 	line-height: 0.8em;
 }
 input.span3 {
@@ -75,23 +75,10 @@ input.span3#date {
 	margin: 0 20px 20px 0;
 	display: inline;
 }
-.orange {
-	color: #e67e22;
-}
 img#cal {
 	width: 60px;
 	margin: 0 0 15px 0;
 }
-p.belowbtn {
-	text-align: center;
-}
-.cf { zoom: 1; }
-
-.cf:before,
-
-.cf:after { content: ""; display: table; }
-
-.cf:after { clear: both; }
 
 #login {
   width: 140px;
@@ -106,3 +93,27 @@ p.belowbtn {
   display: inline;
   margin: -3px 0 10px 0;
 }
+
+p.belowbtn { text-align: center; }
+
+.orange { color: #e67e22; }
+
+.cf { zoom: 1; }
+
+.cf:before,
+
+.cf:after { content: ""; display: table; }
+
+.cf:after { clear: both; }
+
+
+
+
+
+
+
+#container-big {
+	margin: 50px auto;
+	width: 500px;
+}
+
