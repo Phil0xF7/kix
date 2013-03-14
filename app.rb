@@ -78,7 +78,7 @@ before '/task*' do
 end
 
 get '/' do
-    redirect 'index.html'
+  redirect '/login'
 end
 
 # get all tasks in existence
