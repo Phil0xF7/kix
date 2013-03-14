@@ -177,21 +177,20 @@ post '/test' do
   # end
 
   task = Task.create(
+              # :user_id => current_user.id,
               :user_id => current_user.id,
-              :type => params[:type_task],
-              :text => params[:type_text],
-              :completed => params[:completed],
+              :type => params[:post][:type_task],
+              :text => params[:post][:type_text],
+              :completed => params[:post][:completed],
               :created_at => Time.now,
               :updated_at => Time.now)
 
-  # PUT requests must return a Location header for the new resource
+  # # PUT requests must return a Location header for the new resource
   if task.save
     return [201, {'Content-Type' => 'application/json'}, ['Good, work.']]
   else
-    return [406, {'Content-Type' => 'application/json'}, ['']]
+    return [406, {'Content-Type' => 'application/json'}, ['ERROR']]
   end
-
-
 end
 
 
