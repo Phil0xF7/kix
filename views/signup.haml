@@ -1,0 +1,34 @@
+!!!
+%html
+  %head
+    %title Prekix | Get ready for Kickstarter success!
+    %link{:href => "css/kix-styles.css", :rel => "stylesheet", :type => "text/css"}/
+  %body
+    #container
+      #container-top
+        %img#clipboard.big-illustration-pusher{:height => "100", :src => "images/illustrations/clipboard.png", :width => "100"}/
+        %h1#welcome Start an Account
+      / end container-top
+      #container-bot
+        %form
+          %input.span3{:name => "user[email]", :size => 30, :type => "text", :value => "email"}/
+          %input.span3{:name => "user[password]", :size => 30, :type => "password", :value => "password"}/
+          %input.span3{:name => "user[password_confirmation]", :size => 30, :type => "password", :value => "password"}/
+          %input.btn.btn-large.btn-block{:type => "submit", :value => "Sign Me Up!"}/
+        %p.belowbtn
+          Already have an account?
+          %a{:href => "/login"} Log in.
+      / end container-bot
+    / end container
+
+/ auth format
+
+/ %input{:name => "user[email]", :size => 30, :type => "text", :value => @user.email}
+/ %input{:name => "user[password]", :size => 30, :type => "password"}
+/ %input{:name => "user[password_confirmation]", :size => 30, :type => "password"}
+
+/ %select{:name => "user[permission_level]"}
+/   %option{:value => -1, :selected => @user.admin?}
+/     Admin
+/   %option{:value => 1, :selected => @user.permission_level == 1}
+/     Authenticated user

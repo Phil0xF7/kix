@@ -43,7 +43,6 @@ set :sinatra_authentication_view_path, Pathname(__FILE__).dirname.expand_path + 
 
 
 
-
 class Task
   include DataMapper::Resource
 

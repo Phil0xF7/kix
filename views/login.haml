@@ -13,12 +13,12 @@
       / end container-top
       #container-bot
         %form
-          %input.span3{:name => "user[email]", :size => 30, :type => "text"}/
-          %input.span3{:name => "user[password]", :size => 30, :type => "password"}/
+          %input.span3{:name => "email", :size => 30, :type => "text", :value => "email"}/
+          %input.span3{:name => "password", :size => 30, :type => "password", :value => "password"}/
           %input.btn.btn-large.btn-block{:type => "submit", :value => "Login"}/
         %p.belowbtn
           Don't have an account?
-          %a{:href => "signup.html"} Create one now.
+          %a{:href => "/signup"} Create one now.
       / end container-bot
     / end container
 
@@ -26,7 +26,7 @@
 /auth format
 
 / %input{:name => "user[email]", :size => 30, :type => "text", :value => @user.email}
-/ %input{:name => u"ser[password]", :size => 30, :type => "password"}
+/ %input{:name => "user[password]", :size => 30, :type => "password"}
 / %input{:name => "user[password_confirmation]", :size => 30, :type => "password"}
 
 / %select{:name => "user[permission_level]"}
