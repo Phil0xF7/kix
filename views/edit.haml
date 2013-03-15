@@ -1,0 +1,5 @@
+%select{:name => "user[permission_level]"}
+  %option{:value => -1, :selected => @user.admin?}
+    Admin
+  %option{:value => 1, :selected => @user.permission_level == 1}
+    Authenticated user

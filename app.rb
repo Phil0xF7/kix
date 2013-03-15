@@ -41,6 +41,16 @@ use Rack::Session::Cookie, :secret => 'A1 sauce 1s so good you should use 1t on 
 set :sinatra_authentication_view_path, Pathname(__FILE__).dirname.expand_path + "views/"
 
 
+class DmUser
+  include DataMapper::Resource
+
+  DmUser.property(:id, Serial)
+  DmUser.property(:name, Text)
+  DmUser.property(:password, Text)
+  DmUser.property(:created_at, DateTime)
+  DmUser.property(:updated_at, DateTime)
+
+end
 
 
 class Task
@@ -79,7 +89,7 @@ def jsonp?(json)
   end
 end
 
-#most login before
+#must login before
 before '/task*' do
   login_required
 end
@@ -125,8 +135,6 @@ end
 
 ## For testing:
 ## curl -vX PUT -d '{"current_user.id": "2", "type": "fin_goal", "text": "10000.000", "completed": "true" }' http://localhost:9292/task
-
-#
 
 
 
