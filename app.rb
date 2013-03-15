@@ -36,6 +36,14 @@ DataMapper.setup(:default, settings.datamapper_url)
 
 use Rack::Session::Cookie, :secret => 'A1 sauce 1s so good you should use 1t on a11 yr st34ksssss'
 
+# Configuring user login
+
+set :sinatra_authentication_view_path, Pathname(__FILE__).dirname.expand_path + "views/"
+
+
+
+
+
 class Task
   include DataMapper::Resource
 
@@ -72,13 +80,13 @@ def jsonp?(json)
   end
 end
 
-# comment out for dev mode
+#most login before
 before '/task*' do
   login_required
 end
 
 get '/' do
-  redirect '/login'
+  redirect '/index.html'
 end
 
 # get all tasks in existence
@@ -104,19 +112,9 @@ get '/task/:id' do
   return [200, {'Content-Type' => 'application/json'}, [jsonp?(task.to_json)]]
 end
 
+#get all task by specific user_id
 get '/user' do
   task = Task.all(:user_id  => current_user.id).to_a
-
-  if task.nil?
-    return [404, {'Content-Type' => 'application/json'}, ['']]
-  end
-
-  return [200, {'Content-Type' => 'application/json'}, [jsonp?(task.to_json)]]
-end
-
-#get all task by specific user_id
-get '/user/:cur_usr' do
-  task = Task.all(:user_id  =>  params[:cur_usr]).to_a
 
   if task.nil?
     return [404, {'Content-Type' => 'application/json'}, ['']]
