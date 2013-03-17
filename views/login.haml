@@ -12,7 +12,7 @@
           %span.orange PreKix
       / end container-top
       #container-bot
-        %form
+        %form{:action => "/login", :method => "post"}
           %input.span3{:name => "email", :size => 30, :type => "text", :value => "email"}/
           %input.span3{:name => "password", :size => 30, :type => "password", :value => "password"}/
           %input.btn.btn-large.btn-block{:type => "submit", :value => "Login"}/

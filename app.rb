@@ -41,18 +41,6 @@ use Rack::Session::Cookie, :secret => 'A1 sauce 1s so good you should use 1t on 
 set :sinatra_authentication_view_path, Pathname(__FILE__).dirname.expand_path + "views/"
 
 
-class DmUser
-  include DataMapper::Resource
-
-  DmUser.property(:id, Serial)
-  DmUser.property(:name, Text)
-  DmUser.property(:password, Text)
-  DmUser.property(:created_at, DateTime)
-  DmUser.property(:updated_at, DateTime)
-
-end
-
-
 class Task
   include DataMapper::Resource
 
@@ -90,9 +78,9 @@ def jsonp?(json)
 end
 
 #must login before
-before '/task*' do
-  login_required
-end
+# before '/task*' do
+#   login_required
+# end
 
 get '/' do
   redirect '/index.html'
@@ -241,5 +229,15 @@ delete '/task/:id' do
     return [500, {'Content-Type' => 'application/json'}, ['']]
   end
 end
+
+#generate task list for every new user that signs up
+
+post '/signup' do
+ puts "hello world"
+end
+
+
+
+
 
 
