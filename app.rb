@@ -40,10 +40,16 @@ use Rack::Session::Cookie, :secret => 'A1 sauce 1s so good you should use 1t on 
 
 set :sinatra_authentication_view_path, Pathname(__FILE__).dirname.expand_path + "views/"
 
+# user class
+class DmUser
+  has n, :Task
+end
 
+# task class
 class Task
   include DataMapper::Resource
 
+  # properties
   Task.property(:id, Serial)
   Task.property(:user_id, Integer, :required => true)
   Task.property(:type, Text, :required => true)
@@ -51,6 +57,9 @@ class Task
   Task.property(:completed, Boolean, :default => false)
   Task.property(:created_at, DateTime)
   Task.property(:updated_at, DateTime)
+
+  # associations
+  belongs_to :DmUser
 
   def to_json(*a)
    {
@@ -233,7 +242,18 @@ end
 #generate task list for every new user that signs up
 
 post '/signup' do
- puts "hello world"
+  task = Task.create(
+              :user_id => current_user.id,
+              :type => params[:type_task],
+              :text => params[:type_text],
+              :completed => params[:completed],
+              :created_at => Time.now,
+              :updated_at => Time.now)
+  if task.save
+    return [201, {'Content-Type' => 'application/json'}, ['Good, work.']]
+  else
+    return [406, {'Content-Type' => 'application/json'}, ['']]
+  end
 end
 
 
