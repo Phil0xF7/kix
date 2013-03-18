@@ -5,11 +5,25 @@
 @import url("bootstrap.css");
 @import url("flat-ui.css");
 
+
 /* Kix Styling */
 
-body {
-	background-color: #1abc9c;
-	}
+body { background-color: #1abc9c; }
+
+.center { text-align: center; }
+
+.orange { color: #e67e22; }
+
+.cf { zoom: 1; }
+
+.cf:before,
+
+.cf:after { content: ""; display: table; }
+
+.cf:after { clear: both; }
+
+
+/****** Structural ******/
 
 #container {
 	margin: 50px auto;
@@ -42,22 +56,45 @@ body {
 	border-radius: 0 0 6px 6px;
 	padding: 20px 20px 10px 20px;
 }
-h1#welcome {
+
+
+#container-big {
+	margin: 50px auto;
+	width: 500px;
+}
+
+#container-big #container-top h1, {
+	text-align: center;
+}
+
+#videohere {
+	background: #000;
+	width: 460px;
+	height: 300px;
+	margin: 0 auto;
+}
+
+
+/****** Text Elements ******/
+
+#index h1, #loginpg h1, #signupnow h1 {
 	float: left;
 	width: 160px;
 	font-size: 2.6em;
 	margin: 15px 20px 0 0;
 	display: inline;
 }
-h1#congrats {
-	text-align: center;
+#deadline h1 {
 	font-size: 2.8em;
 }
-h2#almost {
-	text-align: center;
+#deadline h2 {
 	margin-bottom: 20px;
 	line-height: 0.8em;
 }
+
+
+/****** Form Styling ******/
+
 input.span3 {
 	width: 95%;
 	font-size: 1.4em;
@@ -70,16 +107,6 @@ input.span3#date {
 	text-align: center;
 	margin: 5px 20px 20px 0;
 }
-#clipboard {
-	float:left; 
-	margin: 0 20px 20px 0;
-	display: inline;
-}
-img#cal {
-	width: 60px;
-	margin: 0 0 15px 0;
-}
-
 #login {
   width: 140px;
   float: left;
@@ -94,26 +121,24 @@ img#cal {
   margin: -3px 0 10px 0;
 }
 
-p.belowbtn { text-align: center; }
 
-.orange { color: #e67e22; }
+/****** Images ******/
 
-.cf { zoom: 1; }
-
-.cf:before,
-
-.cf:after { content: ""; display: table; }
-
-.cf:after { clear: both; }
-
-
-
-
-
-
-
-#container-big {
-	margin: 50px auto;
-	width: 500px;
+#clipboard {
+	float:left; 
+	margin: 0 20px 20px 0;
+	display: inline;
 }
+img#cal {
+	width: 60px;
+	margin: 0 0 15px 0;
+}
+
+
+
+
+
+
+
+
 
